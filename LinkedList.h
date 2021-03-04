@@ -9,23 +9,23 @@ private:
 	class Node
 	{
 	private:
-		Node* next;
-		Type data;
+		Node* mp_next;
+		Type m_data;
 	public:
 		Node();
 		Node(Type _data);
 
 		Type getData() const;
 		Type& getDataAddress();
-		void setData(Type data);
+		void setData(Type m_data);
 
 		Node* getNext() const;
 		void setNext(Node*);
 	};
 
-	Node* first;
-	Node* last;
-	int size;
+	Node* mp_first;
+	Node* mp_last;
+	int m_size;
 
 	Node* jump(unsigned steps) const;
 public:
@@ -40,14 +40,14 @@ public:
 
 	void clear();
 
-	int indexOf(Type data) const;
+	int indexOf(Type m_data) const;
 	Type& operator[](unsigned index) const;
-	void insert(unsigned index, Type data);
+	void insert(unsigned index, Type m_data);
 	void erase(unsigned index);
 };
 
 template <class Type>
-LinkedList<Type>::LinkedList() : first(nullptr), last(nullptr), size(0)
+LinkedList<Type>::LinkedList() : mp_first(nullptr), mp_last(nullptr), m_size(0)
 {
 
 }
@@ -55,21 +55,21 @@ LinkedList<Type>::LinkedList() : first(nullptr), last(nullptr), size(0)
 template <class Type>
 LinkedList<Type>::LinkedList(const LinkedList<Type>& other)
 {
-	size = other.size;
+	m_size = other.m_size;
 
-	if (size == 0)
+	if (m_size == 0)
 	{
-		first = nullptr;
-		last = nullptr;
+		mp_first = nullptr;
+		mp_last = nullptr;
 	}
 	else
 	{
-		Node* current = other.first;
+		Node* current = other.mp_first;
 
 		while (current != nullptr)
 		{
-			pushRight(current.data);
-			current = current->next;
+			pushRight(current.m_data);
+			current = current->mp_next;
 		}
 	}
 }
@@ -83,19 +83,19 @@ LinkedList<Type>::~LinkedList()
 template <class Type>
 void LinkedList<Type>::clear()
 {
-	Node* current = first;
+	Node* current = mp_first;
 
 	while (current != nullptr)
 	{
-		Node* next = current->getNext();
+		Node* mp_next = current->getNext();
 		delete current;
 
-		current = next;
+		current = mp_next;
 	}
 
-	first = nullptr;
-	last = nullptr;
-	size = 0;
+	mp_first = nullptr;
+	mp_last = nullptr;
+	m_size = 0;
 }
 
 template <class Type>
@@ -103,20 +103,20 @@ void LinkedList<Type>::pushRight(Type info)
 {
 	Node* toPush = new Node(info);
 
-	if (size == 0)
+	if (m_size == 0)
 	{
-		first = toPush;
-		last = toPush;
+		mp_first = toPush;
+		mp_last = toPush;
 	}
 	else
 	{
-		last->setNext(toPush);
-		last = last->getNext();
+		mp_last->setNext(toPush);
+		mp_last = mp_last->getNext();
 
-		last->setNext(nullptr);
+		mp_last->setNext(nullptr);
 	}
 
-	size++;
+	m_size++;
 }
 
 template <class Type>
@@ -124,24 +124,24 @@ void LinkedList<Type>::pushLeft(Type info)
 {
 	Node* node = new Node(info);
 
-	if (first == nullptr)
+	if (mp_first == nullptr)
 	{
-		first = node;
-		last = node;
+		mp_first = node;
+		mp_last = node;
 	}
 	else
 	{
-		node->setNext(first);
-		first = node;
+		node->setNext(mp_first);
+		mp_first = node;
 	}
 
-	size++;
+	m_size++;
 }
 
 template <class Type>
 int LinkedList<Type>::getSize() const
 {
-	return size;
+	return m_size;
 }
 
 template <class Type>
@@ -149,7 +149,7 @@ int LinkedList<Type>::indexOf(Type _data) const
 {
 	unsigned index = 0;
 
-	Node* current = first;
+	Node* current = mp_first;
 
 	while (current != nullptr)
 	{
@@ -169,7 +169,7 @@ template <class Type>
 typename LinkedList<Type>::Node* LinkedList<Type>::jump(unsigned steps) const
 {
 	int jumps = 0;
-	Node* node = first;
+	Node* node = mp_first;
 
 	while (jumps <= steps)
 	{
@@ -199,29 +199,29 @@ Type& LinkedList<Type>::operator[](unsigned index) const
 template <class Type>
 void LinkedList<Type>::erase(unsigned index)
 {
-	if (size <= index || size == 0)
+	if (m_size <= index || m_size == 0)
 	{
 		throw std::out_of_range("List out of range");
 	}
 
-	if (size == 1)
+	if (m_size == 1)
 	{
-		delete first;
-		delete last;
+		delete mp_first;
+		delete mp_last;
 
-		first = nullptr;
-		last = nullptr;
-		size = 0;
+		mp_first = nullptr;
+		mp_last = nullptr;
+		m_size = 0;
 		return;
 	}
 
 	if (index == 0)
 	{
-		Node* aux = first->getNext();
-		delete first;
+		Node* aux = mp_first->getNext();
+		delete mp_first;
 
-		first = aux;
-		size--;
+		mp_first = aux;
+		m_size--;
 		return;
 	}
 
@@ -235,86 +235,86 @@ void LinkedList<Type>::erase(unsigned index)
 	if (after == nullptr)
 	{
 		before->setNext(nullptr);
-		last = before;
+		mp_last = before;
 	}
 	else
 	{
 		before->setNext(after);
 	}
 
-	size--;
+	m_size--;
 }
 
 template <class Type>
-void LinkedList<Type>::insert(unsigned index, Type data)
+void LinkedList<Type>::insert(unsigned index, Type m_data)
 {
-	if (index > size)
+	if (index > m_size)
 	{
 		throw std::out_of_range("Insert index exceeded the end of the list");
 	}
 
-	if (size == 0 || index == 0)
+	if (m_size == 0 || index == 0)
 	{
-		pushLeft(data);
+		pushLeft(m_data);
 		return;
 	}
 
-	if (index == size)
+	if (index == m_size)
 	{
-		pushRight(data);
+		pushRight(m_data);
 		return;
 	}
 
 
-	Node* newNode = new Node(data);
+	Node* newNode = new Node(m_data);
 	Node* before = jump(index - 1);
 	Node* after = before->getNext();
 
 	before->setNext(newNode);
 	newNode->setNext(after);
 	
-	size++;
+	m_size++;
 }
 
 template <class Type>
 LinkedList<Type>::Node::Node()
 {
-	next = nullptr;
+	mp_next = nullptr;
 }
 
 template <class Type>
 LinkedList<Type>::Node::Node(Type _data)
 {
-	data = _data;
-	next = nullptr;
+	m_data = _data;
+	mp_next = nullptr;
 }
 
 template <class Type>
 Type LinkedList<Type>::Node::getData() const
 {
-	return data;
+	return m_data;
 }
 
 template <class Type>
 void LinkedList<Type>::Node::setData(Type _data)
 {
-	data = _data;
+	m_data = _data;
 }
 
 template <class Type>
 typename LinkedList<Type>::Node* LinkedList<Type>::Node::getNext() const
 {
-	return next;
+	return mp_next;
 }
 
 template <class Type>
 void LinkedList<Type>::Node::setNext(Node* _next)
 {
-	next = _next;
+	mp_next = _next;
 }
 
 template <class Type>
 Type& LinkedList<Type>::Node::getDataAddress()
 {
-	return data;
+	return m_data;
 }
