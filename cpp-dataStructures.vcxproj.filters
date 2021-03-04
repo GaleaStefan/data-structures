@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\stack">
+      <UniqueIdentifier>{3385b163-65f0-486a-a27b-ae511e5b9d9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\list">
+      <UniqueIdentifier>{38666959-656e-431c-8bdd-6000c1ad9026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -20,8 +26,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LinkedList.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="stack\Stack.h">
+      <Filter>Header Files\stack</Filter>
+    </ClInclude>
+    <ClInclude Include="list\LinkedList.h">
+      <Filter>Header Files\list</Filter>
+    </ClInclude>
+    <ClInclude Include="stack\ArrayStack.h">
+      <Filter>Header Files\stack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

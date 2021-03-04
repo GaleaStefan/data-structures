@@ -25,7 +25,7 @@ private:
 
 	Node* mp_first;
 	Node* mp_last;
-	int m_size;
+	unsigned m_size;
 
 	Node* jump(unsigned steps) const;
 public:
@@ -168,7 +168,7 @@ int LinkedList<Type>::indexOf(Type _data) const
 template <class Type>
 typename LinkedList<Type>::Node* LinkedList<Type>::jump(unsigned steps) const
 {
-	int jumps = 0;
+	unsigned jumps = 0;
 	Node* node = mp_first;
 
 	while (jumps <= steps)
@@ -186,6 +186,8 @@ typename LinkedList<Type>::Node* LinkedList<Type>::jump(unsigned steps) const
 		jumps++;
 		node = node->getNext();
 	}
+
+	return nullptr;
 }
 
 template <class Type>
