@@ -42,6 +42,7 @@ public:
 
 	int indexOf(Type data) const;
 	Type& operator[](unsigned index) const;
+	void insert(unsigned index, Type data);
 	void erase(unsigned index);
 };
 
@@ -242,6 +243,37 @@ void LinkedList<Type>::erase(unsigned index)
 	}
 
 	size--;
+}
+
+template <class Type>
+void LinkedList<Type>::insert(unsigned index, Type data)
+{
+	if (index > size)
+	{
+		throw std::out_of_range("Insert index exceeded the end of the list");
+	}
+
+	if (size == 0 || index == 0)
+	{
+		pushLeft(data);
+		return;
+	}
+
+	if (index == size)
+	{
+		pushRight(data);
+		return;
+	}
+
+
+	Node* newNode = new Node(data);
+	Node* before = jump(index - 1);
+	Node* after = before->getNext();
+
+	before->setNext(newNode);
+	newNode->setNext(after);
+	
+	size++;
 }
 
 template <class Type>
