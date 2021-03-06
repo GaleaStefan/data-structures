@@ -41,9 +41,11 @@ public:
 	void clear();
 
 	int indexOf(Type m_data) const;
-	Type& operator[](unsigned index) const;
 	void insert(unsigned index, Type m_data);
 	void erase(unsigned index);
+
+	Type& operator[](unsigned index) const;
+	LinkedList<Type>& operator=(const LinkedList<Type>& other);
 };
 
 template <class Type>
@@ -55,9 +57,9 @@ LinkedList<Type>::LinkedList() : mp_first(nullptr), mp_last(nullptr), m_size(0)
 template <class Type>
 LinkedList<Type>::LinkedList(const LinkedList<Type>& other)
 {
-	m_size = other.m_size;
+	m_size = 0;
 
-	if (m_size == 0)
+	if (other.m_size == 0)
 	{
 		mp_first = nullptr;
 		mp_last = nullptr;
@@ -68,11 +70,12 @@ LinkedList<Type>::LinkedList(const LinkedList<Type>& other)
 
 		while (current != nullptr)
 		{
-			pushRight(current.m_data);
-			current = current->mp_next;
+			pushRight(current->getData());
+			current = current->getNext();
 		}
 	}
 }
+
 
 template <class Type>
 LinkedList<Type>::~LinkedList()
@@ -196,6 +199,39 @@ Type& LinkedList<Type>::operator[](unsigned index) const
 	Node* atIndex = jump(index);
 
 	return atIndex->getDataAddress();
+}
+
+template <class Type>
+LinkedList<Type>& LinkedList<Type>::operator=(const LinkedList<Type>& other)
+{
+	if (this == &other)
+	{
+		return *this;
+	}
+
+	if (this->m_size)
+	{
+		this->clear();
+	}
+
+	this->m_size = 0;
+	this->mp_first = nullptr;
+	this->mp_last = nullptr;
+
+	if (other.m_size == 0)
+	{
+		return *this;
+	}
+
+	Node* current = other.mp_first;
+
+	while (current != nullptr)
+	{
+		this->pushRight(current->getData());
+		current = current->getNext();
+	}
+
+	return *this;
 }
 
 template <class Type>
